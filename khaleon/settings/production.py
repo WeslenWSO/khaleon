@@ -28,6 +28,10 @@ if render_hostname:
 ALLOWED_HOSTS = list(set(ALLOWED_HOSTS))
 CSRF_TRUSTED_ORIGINS = list(set(CSRF_TRUSTED_ORIGINS))
 
+# Render: serve arquivos de static/ sem depender de collectstatic no build
+WHITENOISE_USE_FINDERS = True
+STORAGES["staticfiles"]["BACKEND"] = "django.contrib.staticfiles.storage.StaticFilesStorage"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
