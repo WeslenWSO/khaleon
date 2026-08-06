@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
+from django.http import HttpResponse
 from django.urls import include, path
 from django.views.generic import TemplateView
 
@@ -14,6 +15,10 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path(
+        ".well-known/cf-custom-hostname-challenge/<slug:token>/",
+        lambda request, token: HttpResponse(status=404),
+    ),
     path("admin/", admin.site.urls),
     path("", include("apps.core.urls")),
     path("servicos/", include("apps.services.urls")),
