@@ -46,7 +46,7 @@ class Command(BaseCommand):
                 "phone": "(68) 99907-3217",
                 "email": "contato@khaleon.com.br",
                 "whatsapp": "5568999073217",
-                "address": "Est. Dias Martins, 1377, 2º Andar, Sala 22\nRio Branco, AC",
+                "address": "",
                 "linkedin": "",
                 "instagram": "",
                 "facebook": "",
