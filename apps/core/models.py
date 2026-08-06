@@ -50,7 +50,18 @@ class SiteConfig(models.Model):
 
     @classmethod
     def load(cls):
-        obj, _ = cls.objects.get_or_create(pk=1)
+        defaults = {
+            "hero_title": "Khaleon IA — BPO inteligente com tecnologia de ponta",
+            "hero_subtitle": (
+                "Automatizamos operações, reduzimos custos e elevamos a eficiência "
+                "do seu negócio com soluções BPO integradas à tecnologia de ponta."
+            ),
+            "about_intro": "",
+            "mission": "",
+            "vision": "",
+            "values": "",
+        }
+        obj, _ = cls.objects.get_or_create(pk=1, defaults=defaults)
         return obj
 
 
