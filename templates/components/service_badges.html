@@ -1,0 +1,14 @@
+{% if service.coming_soon or service.on_demand %}
+<div class="flex flex-wrap gap-2 {% if class %}{{ class }}{% endif %}">
+    {% if service.coming_soon %}
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide {% if variant == 'dark' %}bg-amber-400/20 text-amber-300 border border-amber-400/40{% else %}bg-amber-100 text-amber-800 border border-amber-200{% endif %}">
+        Em breve
+    </span>
+    {% endif %}
+    {% if service.on_demand %}
+    <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide {% if variant == 'dark' %}bg-khaleon-accent/20 text-khaleon-accent border border-khaleon-accent/40{% else %}bg-cyan-100 text-cyan-800 border border-cyan-200{% endif %}">
+        Sob demanda
+    </span>
+    {% endif %}
+</div>
+{% endif %}

@@ -19,6 +19,8 @@ class Service(models.Model):
     description = models.TextField("Descrição")
     order = models.PositiveIntegerField("Ordem", default=0)
     active = models.BooleanField("Ativo", default=True)
+    coming_soon = models.BooleanField("Em breve", default=False)
+    on_demand = models.BooleanField("Sob demanda", default=False)
 
     class Meta:
         ordering = ["order"]

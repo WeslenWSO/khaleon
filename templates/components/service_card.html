@@ -1,11 +1,15 @@
 <a href="{% url 'services:detail' service.slug %}" class="group block bg-white rounded-xl p-6 shadow-sm hover:shadow-lg border border-slate-100 transition-all hover:-translate-y-1 card-glow">
-    <div class="w-12 h-12 rounded-lg {% if service.slug == 'dashboard-conta-azul' %}bg-white border border-slate-200{% else %}bg-khaleon-accent/10 group-hover:bg-khaleon-accent/20 text-khaleon-accent{% endif %} flex items-center justify-center mb-4 transition-colors px-2">
-        {% if service.slug == 'dashboard-conta-azul' %}
-        {% include "components/conta_azul_logo.html" with class="h-6 w-auto" %}
-        {% else %}
-        {% include "components/icon.html" with icon=service.icon %}
-        {% endif %}
-    </div>    <h3 class="text-lg font-semibold text-khaleon-dark mb-2">{{ service.title }}</h3>
+    <div class="flex items-start justify-between gap-3 mb-4">
+        <div class="w-12 h-12 rounded-lg {% if service.slug == 'dashboard-conta-azul' %}bg-white border border-slate-200{% else %}bg-khaleon-accent/10 group-hover:bg-khaleon-accent/20 text-khaleon-accent{% endif %} flex items-center justify-center shrink-0 transition-colors px-2">
+            {% if service.slug == 'dashboard-conta-azul' %}
+            {% include "components/conta_azul_logo.html" with class="h-6 w-auto" %}
+            {% else %}
+            {% include "components/icon.html" with icon=service.icon %}
+            {% endif %}
+        </div>
+        {% include "components/service_badges.html" with class="justify-end" %}
+    </div>
+    <h3 class="text-lg font-semibold text-khaleon-dark mb-2">{{ service.title }}</h3>
     <p class="text-slate-600 text-sm">{{ service.summary }}</p>
     <span class="inline-block mt-4 text-khaleon-accent text-sm font-medium group-hover:underline">Saiba mais &rarr;</span>
 </a>

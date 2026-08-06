@@ -150,6 +150,8 @@ class Command(BaseCommand):
                     "nas consultas ao CAR."
                 ),
                 "order": 5,
+                "coming_soon": True,
+                "on_demand": True,
             },
         ]
         for data in services_data:
