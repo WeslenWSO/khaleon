@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="pt-24 pb-8 bg-khaleon-dark text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <a href="{% url 'services:detail' service.slug %}" class="text-khaleon-accent text-sm hover:underline mb-4 inline-block">&larr; Voltar ao serviço</a>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div class="flex items-center gap-5">
+                <div class="bg-white rounded-xl px-4 py-3 shrink-0">
+                    {% include "components/conta_azul_logo.html" with class="h-9 w-auto" %}
+                </div>
+                <div>
+                    <p class="text-khaleon-accent text-sm font-medium uppercase tracking-widest mb-1">Integração</p>
+                    <h1 class="text-3xl font-bold">Dashboard financeiro</h1>
+                    <p class="text-slate-300 mt-1">{{ data.company }} · {{ data.period }}</p>
+                </div>
+            </div>
+            {% if data.source == "demo" %}
+            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-medium">
+                Dados de demonstração — conecte sua Conta Azul no admin
+            </span>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-10 bg-slate-50 relative overflow-hidden">
+    {% if data.source == "demo" %}
+    <div class="demo-stamp" aria-hidden="true">
+        <span>DEMONSTRAÇÃO</span>
+    </div>
+    {% endif %}
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-10">
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <p class="text-slate-500 text-xs uppercase tracking-wide mb-1">Receitas</p>
+                <p class="text-xl font-bold text-emerald-600">R$ {{ data.summary.receitas|floatformat:2 }}</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <p class="text-slate-500 text-xs uppercase tracking-wide mb-1">Despesas</p>
+                <p class="text-xl font-bold text-red-500">R$ {{ data.summary.despesas|floatformat:2 }}</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <p class="text-slate-500 text-xs uppercase tracking-wide mb-1">Saldo</p>
+                <p class="text-xl font-bold text-khaleon-dark">R$ {{ data.summary.saldo|floatformat:2 }}</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+                <p class="text-slate-500 text-xs uppercase tracking-wide mb-1">A receber</p>
+                <p class="text-xl font-bold text-khaleon-accent">R$ {{ data.summary.contas_receber|floatformat:2 }}</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm col-span-2 lg:col-span-1">
+                <p class="text-slate-500 text-xs uppercase tracking-wide mb-1">A pagar</p>
+                <p class="text-xl font-bold text-orange-500">R$ {{ data.summary.contas_pagar|floatformat:2 }}</p>
+            </div>
+        </div>
+
+        <div class="grid lg:grid-cols-2 gap-6 mb-10">
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <h2 class="text-lg font-semibold text-khaleon-dark mb-1">Receitas por categoria</h2>
+                <p class="text-slate-500 text-sm mb-4">Distribuição do faturamento no período</p>
+                <div class="relative h-72">
+                    <canvas id="chart-receitas-pizza"></canvas>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-100 shadow-sm p-6">
+                <h2 class="text-lg font-semibold text-khaleon-dark mb-1">Evolução das despesas</h2>
+                <p class="text-slate-500 text-sm mb-4">Últimos 6 meses</p>
+                <div class="relative h-72">
+                    <canvas id="chart-despesas-linha"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl border border-slate-100 shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-slate-100">
+                <h2 class="text-lg font-semibold text-khaleon-dark">Lançamentos recentes</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead class="bg-slate-50 text-slate-600">
+                        <tr>
+                            <th class="text-left px-6 py-3 font-medium">Data</th>
+                            <th class="text-left px-6 py-3 font-medium">Descrição</th>
+                            <th class="text-left px-6 py-3 font-medium">Tipo</th>
+                            <th class="text-right px-6 py-3 font-medium">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100">
+                        {% for item in data.recent %}
+                        <tr>
+                            <td class="px-6 py-3 text-slate-600">{{ item.date }}</td>
+                            <td class="px-6 py-3 text-khaleon-dark">{{ item.description }}</td>
+                            <td class="px-6 py-3">
+                                <span class="px-2 py-0.5 rounded text-xs font-medium {% if item.type == 'receita' %}bg-emerald-100 text-emerald-700{% else %}bg-red-100 text-red-700{% endif %}">
+                                    {{ item.type|title }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-3 text-right font-medium {% if item.value >= 0 %}text-emerald-600{% else %}text-red-500{% endif %}">
+                                R$ {{ item.value|floatformat:2 }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{ data.charts|json_script:"dashboard-charts" }}
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const charts = JSON.parse(document.getElementById('dashboard-charts').textContent);
+
+    new Chart(document.getElementById('chart-receitas-pizza'), {
+        type: 'pie',
+        data: {
+            labels: charts.receitas_pizza.labels,
+            datasets: [{
+                data: charts.receitas_pizza.values,
+                backgroundColor: ['#10b981', '#00D2FF', '#6366F1', '#0070E0'],
+                borderWidth: 2,
+                borderColor: '#ffffff',
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function (ctx) {
+                            const v = ctx.raw;
+                            const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                            const pct = ((v / total) * 100).toFixed(1);
+                            return ctx.label + ': R$ ' + v.toLocaleString('pt-BR') + ' (' + pct + '%)';
+                        },
+                    },
+                },
+            },
+        },
+    });
+
+    new Chart(document.getElementById('chart-despesas-linha'), {
+        type: 'line',
+        data: {
+            labels: charts.despesas_linha.labels,
+            datasets: [{
+                label: 'Despesas (R$)',
+                data: charts.despesas_linha.values,
+                borderColor: '#ef4444',
+                backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                fill: true,
+                tension: 0.35,
+                pointBackgroundColor: '#ef4444',
+                pointRadius: 4,
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function (ctx) {
+                            return 'R$ ' + ctx.raw.toLocaleString('pt-BR');
+                        },
+                    },
+                },
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    ticks: {
+                        callback: function (v) {
+                            return 'R$ ' + (v / 1000).toFixed(0) + 'k';
+                        },
+                    },
+                },
+            },
+        },
+    });
+});
+</script>
+{% endblock %}

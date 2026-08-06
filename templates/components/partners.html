@@ -1,0 +1,19 @@
+{% if partners %}
+<section class="py-12 bg-white border-y border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <p class="text-center text-sm font-medium text-slate-500 uppercase tracking-widest mb-8">Parceiros</p>
+        <div class="flex flex-wrap items-center justify-center gap-8">
+            {% for partner in partners %}
+            <a href="{{ partner.url }}" target="_blank" rel="noopener noreferrer"
+               class="group flex items-center justify-center px-8 py-4 rounded-xl border border-slate-200 bg-slate-50 hover:border-khaleon-accent/40 hover:bg-khaleon-accent/5 transition-all">
+                {% if partner.logo %}
+                <img src="{{ partner.logo.url }}" alt="{{ partner.name }}" class="h-10 max-w-[160px] object-contain opacity-80 group-hover:opacity-100 transition-opacity">
+                {% else %}
+                <span class="text-lg font-semibold text-khaleon-dark group-hover:text-khaleon-accent transition-colors">{{ partner.name }}</span>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}

@@ -1,0 +1,50 @@
+<footer class="bg-khaleon-dark text-slate-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <a href="{% url 'core:home' %}" class="inline-block mb-4 group">
+                    <span class="font-display font-bold text-white tracking-wide text-lg group-hover:text-khaleon-accent transition-colors">KHALEON IA</span>
+                    <p class="text-khaleon-accent text-xs uppercase tracking-widest">Inteligência Artificial Avançada</p>
+                </a>
+                <p class="text-slate-400 text-sm max-w-md">{{ site_config.tagline }}</p>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4">Navegação</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="{% url 'core:about' %}" class="hover:text-khaleon-accent transition-colors">Sobre</a></li>
+                    <li><a href="{% url 'services:list' %}" class="hover:text-khaleon-accent transition-colors">Serviços</a></li>
+                    <li><a href="{% url 'blog:list' %}" class="hover:text-khaleon-accent transition-colors">Blog</a></li>
+                    <li><a href="{% url 'contact:contact' %}" class="hover:text-khaleon-accent transition-colors">Contato</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contato</h4>
+                <ul class="space-y-2 text-sm">
+                    {% if site_config.email %}
+                    <li><a href="mailto:{{ site_config.email }}" class="hover:text-khaleon-accent transition-colors">{{ site_config.email }}</a></li>
+                    {% endif %}
+                    {% if site_config.phone %}
+                    <li>{{ site_config.phone }}</li>
+                    {% endif %}
+                    {% if site_config.address %}
+                    <li class="text-slate-400">{{ site_config.address|linebreaksbr }}</li>
+                    {% endif %}
+                </ul>
+                <div class="flex gap-4 mt-4">
+                    {% if site_config.linkedin %}
+                    <a href="{{ site_config.linkedin }}" target="_blank" rel="noopener" class="hover:text-khaleon-accent transition-colors" aria-label="LinkedIn">LinkedIn</a>
+                    {% endif %}
+                    {% if site_config.instagram %}
+                    <a href="{{ site_config.instagram }}" target="_blank" rel="noopener" class="hover:text-khaleon-accent transition-colors" aria-label="Instagram">Instagram</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="border-t border-slate-700/50 mt-8 pt-8 text-center text-sm text-slate-500">
+            &copy; {% now "Y" %} {{ site_config.site_name }}. Todos os direitos reservados.
+        </div>
+    </div>
+</footer>

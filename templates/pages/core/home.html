@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+{% endblock %}
+
+{% block content %}
+{% include "pages/core/home_hero.html" %}
+
+{% include "components/system_access_card.html" %}
+
+{% include "components/partners.html" %}
+
+{% if stats %}
+<section class="py-12 bg-white border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {% for stat in stats %}
+            <div>
+                <p class="text-3xl font-bold text-khaleon-accent">{{ stat.value }}</p>
+                <p class="text-slate-600 text-sm mt-1">{{ stat.label }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-khaleon-dark mb-4">Por que escolher a Khaleon IA?</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto">Combinamos expertise em BPO com tecnologia de ponta para entregar resultados mensuráveis.</p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="text-center p-6">
+                <div class="w-14 h-14 mx-auto rounded-full bg-khaleon-accent/10 flex items-center justify-center text-khaleon-accent mb-4">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h3 class="font-semibold text-khaleon-dark mb-2">Automação inteligente</h3>
+                <p class="text-slate-600 text-sm">Processos otimizados com RPA e IA para máxima eficiência operacional.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-14 h-14 mx-auto rounded-full bg-khaleon-indigo/10 flex items-center justify-center text-khaleon-indigo mb-4">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h3 class="font-semibold text-khaleon-dark mb-2">Redução de custos</h3>
+                <p class="text-slate-600 text-sm">Até 40% de economia operacional sem comprometer a qualidade.</p>
+            </div>
+            <div class="text-center p-6">
+                <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 mb-4">
+                    <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <h3 class="font-semibold text-khaleon-dark mb-2">Compliance total</h3>
+                <p class="text-slate-600 text-sm">Processos auditáveis e conformidade com LGPD e normas do setor.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if services %}
+<section class="py-20 bg-slate-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12">
+            <div>
+                <h2 class="text-3xl font-bold text-khaleon-dark mb-2">Nossos serviços</h2>
+                <p class="text-slate-600">Soluções completas de BPO com tecnologia integrada.</p>
+            </div>
+            <a href="{% url 'services:list' %}" class="mt-4 sm:mt-0 text-khaleon-accent font-medium hover:underline">Ver todos &rarr;</a>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for service in services %}
+            {% include "components/service_card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+{% if posts %}
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10">
+            <h2 class="text-3xl font-bold text-khaleon-dark mb-2">Blog</h2>
+            <p class="text-slate-600">Mantenha-se atualizado — insights sobre BPO, automação e transformação digital.</p>
+        </div>
+
+        <div class="relative blog-carousel-wrap">
+            <div class="swiper blog-swiper">
+                <div class="swiper-wrapper pb-2">
+                    {% for post in posts %}
+                    <div class="swiper-slide h-auto">
+                        <a href="{% url 'blog:detail' post.slug %}" class="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg border border-slate-100 transition-all h-full">
+                            {% if post.image %}
+                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                            {% else %}
+                            <div class="w-full h-48 bg-gradient-to-br from-khaleon-accent/20 to-khaleon-indigo/20"></div>
+                            {% endif %}
+                            <div class="p-6">
+                                {% if post.category %}
+                                <span class="text-xs font-semibold text-khaleon-accent uppercase tracking-wide">{{ post.category.name }}</span>
+                                {% endif %}
+                                <h3 class="text-lg font-semibold text-khaleon-dark mt-2 group-hover:text-khaleon-accent transition-colors line-clamp-2">{{ post.title }}</h3>
+                                <p class="text-slate-600 text-sm mt-2 line-clamp-3">{{ post.excerpt }}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <button type="button" class="blog-swiper-prev" aria-label="Artigo anterior">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button type="button" class="blog-swiper-next" aria-label="Próximo artigo">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <div class="text-center mt-8">
+            <a href="{% url 'blog:list' %}" class="text-khaleon-accent font-medium hover:underline">Ver todos os artigos &rarr;</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-20 bg-gradient-to-r from-khaleon-dark to-khaleon-indigo text-white">
+    <div class="max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Pronto para transformar seus processos?</h2>
+        <p class="text-slate-300 mb-8">Fale com nossos especialistas e descubra como a Khaleon IA pode impulsionar seu negócio.</p>
+        <a href="{% url 'contact:contact' %}" class="inline-block bg-khaleon-accent hover:bg-cyan-400 text-khaleon-dark px-8 py-3 rounded-lg font-semibold transition-colors">
+            Solicitar proposta
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{% static 'js/home-carousel.js' %}"></script>
+{% endblock %}

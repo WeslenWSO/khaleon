@@ -1,0 +1,38 @@
+{% load static %}
+<section class="hero-carousel relative">
+    <div class="swiper hero-swiper h-[420px] sm:h-[480px] lg:h-[540px]">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="hero-slide-bg" style="background-image: linear-gradient(rgba(0, 20, 40, 0.72), rgba(0, 20, 40, 0.72)), url('{% static 'img/khaleon-hero.png' %}'); background-size: cover; background-position: center;"></div>
+                <div class="hero-slide-content">
+                    <h1 class="hero-slide-title">{{ config.hero_title|default:"Khaleon IA — BPO inteligente com tecnologia de ponta" }}</h1>
+                    <p class="hero-slide-subtitle">{{ config.hero_subtitle|default:"Automatizamos processos, reduzimos custos e elevamos a eficiência do seu negócio com inteligência artificial." }}</p>
+                    <a href="{{ config.hero_cta_url|default:'/contato/' }}" class="hero-slide-cta">{{ config.hero_cta_text|default:"Fale conosco" }}</a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="hero-slide-bg" style="background-image: linear-gradient(rgba(0, 20, 40, 0.75), rgba(0, 71, 171, 0.65)), url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80');"></div>
+                <div class="hero-slide-content">
+                    <h2 class="hero-slide-title">Soluções de BPO que transformam sua operação</h2>
+                    <p class="hero-slide-subtitle">Você cuida do seu negócio — nós cuidamos dos processos com tecnologia e excelência operacional.</p>
+                    <a href="{% url 'services:list' %}" class="hero-slide-cta">Conheça nossos serviços</a>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="hero-slide-bg" style="background-image: linear-gradient(rgba(0, 20, 40, 0.78), rgba(0, 20, 40, 0.78)), url('https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&q=80');"></div>
+                <div class="hero-slide-content">
+                    <h2 class="hero-slide-title">Dashboard Conta Azul integrado ao seu BPO</h2>
+                    <p class="hero-slide-subtitle">Receitas, despesas e indicadores financeiros em um painel visual e intuitivo.</p>
+                    <a href="{% url 'services:detail' 'dashboard-conta-azul' %}" class="hero-slide-cta">Ver dashboard demo</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-swiper-pagination swiper-pagination"></div>
+        <button type="button" class="hero-swiper-prev" aria-label="Slide anterior">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button type="button" class="hero-swiper-next" aria-label="Próximo slide">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+    </div>
+</section>

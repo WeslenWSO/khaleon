@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pt-24 pb-12 bg-khaleon-dark text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-4xl font-bold mb-4">Blog</h1>
+        <p class="text-slate-300 max-w-2xl">Insights sobre BPO, automação, inteligência artificial e transformação digital.</p>
+    </div>
+</section>
+
+{% if categories %}
+<section class="py-8 bg-white border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-2">
+            <a href="{% url 'blog:list' %}" class="px-4 py-2 rounded-full text-sm font-medium {% if not current_category %}bg-khaleon-accent text-khaleon-dark{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors">
+                Todos
+            </a>
+            {% for category in categories %}
+            <a href="?categoria={{ category.slug }}" class="px-4 py-2 rounded-full text-sm font-medium {% if current_category and current_category.slug == category.slug %}bg-khaleon-accent text-khaleon-dark{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors">
+                {{ category.name }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for post in page_obj %}
+            <a href="{% url 'blog:detail' post.slug %}" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg border border-slate-100 transition-all">
+                {% if post.image %}
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-gradient-to-br from-khaleon-accent/20 to-khaleon-indigo/20"></div>
+                {% endif %}
+                <div class="p-6">
+                    {% if post.category %}
+                    <span class="text-xs font-medium text-khaleon-accent">{{ post.category.name }}</span>
+                    {% endif %}
+                    <h3 class="text-lg font-semibold text-khaleon-dark mt-1 group-hover:text-khaleon-accent transition-colors">{{ post.title }}</h3>
+                    <p class="text-slate-600 text-sm mt-2">{{ post.excerpt }}</p>
+                    {% if post.published_at %}
+                    <p class="text-slate-400 text-xs mt-3">{{ post.published_at|date:"d/m/Y" }}</p>
+                    {% endif %}
+                </div>
+            </a>
+            {% empty %}
+            <p class="text-slate-600 col-span-full text-center">Nenhum artigo publicado ainda.</p>
+            {% endfor %}
+        </div>
+
+        {% if page_obj.has_other_pages %}
+        <div class="flex justify-center gap-2 mt-12">
+            {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if current_category %}&categoria={{ current_category.slug }}{% endif %}" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm font-medium transition-colors">&larr; Anterior</a>
+            {% endif %}
+            <span class="px-4 py-2 text-sm text-slate-600">Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if current_category %}&categoria={{ current_category.slug }}{% endif %}" class="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-sm font-medium transition-colors">Próxima &rarr;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="pt-24 pb-12 bg-khaleon-dark text-white overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <p class="text-khaleon-accent font-display text-sm tracking-[0.2em] uppercase mb-4">Sobre nós</p>
+                <h1 class="text-4xl font-bold mb-4">{{ config.about_title|default:"Sobre a Khaleon IA" }}</h1>
+                <p class="text-slate-300 text-lg leading-relaxed">{{ config.about_intro }}</p>
+            </div>
+            <div class="relative max-w-[621px] mx-auto lg:mx-0 lg:ml-auto">
+                <img src="{% static 'img/khaleon-hero.png' %}" alt="Khaleon IA" class="rounded-2xl shadow-2xl hero-glow w-full h-auto">
+                <div class="absolute inset-0 rounded-2xl ring-1 ring-khaleon-accent/30 pointer-events-none"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if stats %}
+<section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            {% for stat in stats %}
+            <div>
+                <p class="text-3xl font-bold text-khaleon-accent">{{ stat.value }}</p>
+                <p class="text-slate-600 text-sm mt-1">{{ stat.label }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white rounded-xl p-8 shadow-sm border border-slate-100">
+                <div class="w-12 h-12 rounded-lg bg-khaleon-accent/10 flex items-center justify-center text-khaleon-accent mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-khaleon-dark mb-3">Missão</h2>
+                <p class="text-slate-600">{{ config.mission }}</p>
+            </div>
+            <div class="bg-white rounded-xl p-8 shadow-sm border border-slate-100">
+                <div class="w-12 h-12 rounded-lg bg-khaleon-indigo/10 flex items-center justify-center text-khaleon-indigo mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-khaleon-dark mb-3">Visão</h2>
+                <p class="text-slate-600">{{ config.vision }}</p>
+            </div>
+            <div class="bg-white rounded-xl p-8 shadow-sm border border-slate-100">
+                <div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 mb-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </div>
+                <h2 class="text-xl font-bold text-khaleon-dark mb-3">Valores</h2>
+                <p class="text-slate-600 whitespace-pre-line">{{ config.values }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

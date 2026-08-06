@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pt-24 pb-12 bg-khaleon-dark text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-4xl font-bold mb-4">Nossos serviços</h1>
+        <p class="text-slate-300 max-w-2xl">Soluções completas de BPO integradas com tecnologia de ponta para transformar sua operação.</p>
+    </div>
+</section>
+
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for service in services %}
+            {% include "components/service_card.html" %}
+            {% empty %}
+            <p class="text-slate-600 col-span-full text-center">Nenhum serviço cadastrado ainda.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

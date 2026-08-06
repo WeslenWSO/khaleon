@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="pt-24 pb-12 bg-khaleon-dark text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-4xl font-bold mb-4">Cases de sucesso</h1>
+        <p class="text-slate-300 max-w-2xl">Resultados reais alcançados com nossas soluções de BPO e tecnologia.</p>
+    </div>
+</section>
+
+<section class="py-8 bg-white border-b border-slate-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap gap-2">
+            <a href="{% url 'cases:list' %}" class="px-4 py-2 rounded-full text-sm font-medium {% if not current_sector %}bg-khaleon-accent text-khaleon-dark{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors">
+                Todos
+            </a>
+            {% for value, label in sectors %}
+            <a href="?setor={{ value }}" class="px-4 py-2 rounded-full text-sm font-medium {% if current_sector == value %}bg-khaleon-accent text-khaleon-dark{% else %}bg-slate-100 text-slate-600 hover:bg-slate-200{% endif %} transition-colors">
+                {{ label }}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for case in cases %}
+            <a href="{% url 'cases:detail' case.slug %}" class="group block bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg border border-slate-100 transition-all">
+                {% if case.image %}
+                <img src="{{ case.image.url }}" alt="{{ case.title }}" class="w-full h-48 object-cover">
+                {% else %}
+                <div class="w-full h-48 bg-gradient-to-br from-khaleon-dark to-khaleon-indigo"></div>
+                {% endif %}
+                <div class="p-6">
+                    <span class="text-xs font-medium text-khaleon-accent uppercase">{{ case.get_sector_display_name }}</span>
+                    <h3 class="text-lg font-semibold text-khaleon-dark mt-1 group-hover:text-khaleon-accent transition-colors">{{ case.title }}</h3>
+                    <p class="text-slate-600 text-sm mt-2">{{ case.client }}</p>
+                </div>
+            </a>
+            {% empty %}
+            <p class="text-slate-600 col-span-full text-center">Nenhum case encontrado.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

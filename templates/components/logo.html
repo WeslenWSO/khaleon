@@ -1,0 +1,21 @@
+{% load static %}
+<span class="flex items-center gap-3">
+    <span class="block h-11 w-11 shrink-0 overflow-hidden rounded-lg ring-1 ring-slate-200/80">
+        <img
+            src="{% static 'img/khaleon-logo.png' %}"
+            alt=""
+            class="h-[4.5rem] w-full object-cover object-top"
+            width="44"
+            height="44"
+        >
+    </span>
+    <span class="flex flex-col leading-tight">
+        {% if variant == "dark" %}
+        <span class="text-sm font-display font-bold text-khaleon-dark tracking-wide group-hover:text-khaleon-cobalt transition-colors">KHALEON IA</span>
+        <span class="text-[10px] text-khaleon-accent uppercase tracking-widest">Inteligência Artificial</span>
+        {% else %}
+        <span class="text-sm font-display font-bold text-white tracking-wide">KHALEON IA</span>
+        <span class="text-[10px] text-khaleon-accent uppercase tracking-widest">Inteligência Artificial</span>
+        {% endif %}
+    </span>
+</span>

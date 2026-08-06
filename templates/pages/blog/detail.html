@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.seo_title }} — Khaleon IA{% endblock %}
+{% block meta_description %}{{ post.seo_description }}{% endblock %}
+
+{% block content %}
+<section class="pt-24 pb-12 bg-khaleon-dark text-white">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <a href="{% url 'blog:list' %}" class="text-khaleon-accent text-sm hover:underline mb-4 inline-block">&larr; Voltar ao blog</a>
+        {% if post.category %}
+        <span class="text-khaleon-accent text-sm font-medium">{{ post.category.name }}</span>
+        {% endif %}
+        <h1 class="text-4xl font-bold mt-2 mb-4">{{ post.title }}</h1>
+        {% if post.published_at %}
+        <p class="text-slate-400 text-sm">{{ post.published_at|date:"d F Y" }}</p>
+        {% endif %}
+    </div>
+</section>
+
+<section class="py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        {% if post.image %}
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="w-full rounded-xl shadow-lg mb-8">
+        {% endif %}
+        <div class="prose prose-slate max-w-none">
+            {{ post.content|linebreaks }}
+        </div>
+    </div>
+</section>
+{% endblock %}
