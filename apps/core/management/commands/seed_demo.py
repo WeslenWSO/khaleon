@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     "Foco no cliente\nSegurança e compliance"
                 ),
                 "phone": "(68) 99907-3217",
-                "email": "contato@khaleon.com.br",
+                "email": "",
                 "whatsapp": "5568999073217",
                 "address": "",
                 "linkedin": "",
