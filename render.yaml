@@ -25,7 +25,9 @@ services:
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: ".onrender.com"
+        value: ".onrender.com,khaleon.com.br,www.khaleon.com.br"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: https://khaleon.com.br,https://www.khaleon.com.br
       - key: DATABASE_URL
         fromDatabase:
           name: khaleon-db

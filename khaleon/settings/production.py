@@ -9,10 +9,21 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# Render define RENDER_EXTERNAL_HOSTNAME automaticamente
+SITE_DOMAINS = ["khaleon.com.br", "www.khaleon.com.br"]
+ALLOWED_HOSTS = list(set(ALLOWED_HOSTS + SITE_DOMAINS + [".onrender.com"]))
+
+CSRF_TRUSTED_ORIGINS = env.list(
+    "CSRF_TRUSTED_ORIGINS",
+    default=[
+        "https://khaleon.com.br",
+        "https://www.khaleon.com.br",
+    ],
+)
+
 render_hostname = env("RENDER_EXTERNAL_HOSTNAME", default=None)
 if render_hostname:
-    ALLOWED_HOSTS = list(set(ALLOWED_HOSTS + [render_hostname, ".onrender.com"]))
-    CSRF_TRUSTED_ORIGINS = [f"https://{render_hostname}"]
-else:
-    CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
+    ALLOWED_HOSTS.append(render_hostname)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{render_hostname}")
+
+ALLOWED_HOSTS = list(set(ALLOWED_HOSTS))
+CSRF_TRUSTED_ORIGINS = list(set(CSRF_TRUSTED_ORIGINS))
