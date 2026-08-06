@@ -19,6 +19,7 @@ staticfiles/
 
 # Environment
 .env
+fixtures/khaleon_export.json
 
 # IDE
 .vscode/
