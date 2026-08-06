@@ -66,10 +66,9 @@ class Command(BaseCommand):
 
         self.stdout.write("Criando estatísticas...")
         stats_data = [
-            ("150+", "Clientes ativos", 1),
-            ("40%", "Redução de custos média", 2),
-            ("2M+", "Processos automatizados", 3),
-            ("99.8%", "SLA de qualidade", 4),
+            ("40%", "Redução de custos média", 1),
+            ("2M+", "Processos automatizados", 2),
+            ("99.8%", "SLA de qualidade", 3),
         ]
         Stat.objects.all().delete()
         for value, label, order in stats_data:
