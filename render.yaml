@@ -14,6 +14,7 @@ services:
     region: oregon
     branch: main
     buildCommand: bash build.sh
+    preDeployCommand: python manage.py migrate --noinput && python manage.py seed_demo
     startCommand: bash start.sh
     envVars:
       - key: PYTHON_VERSION
