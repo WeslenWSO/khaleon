@@ -1,0 +1,34 @@
+# Render Blueprint — projeto Khaleon IA
+# Dashboard: New → Blueprint → conecte o repo WeslenWSO/khaleon
+
+databases:
+  - name: khaleon-db
+    plan: free
+    region: oregon
+
+services:
+  - type: web
+    name: khaleon
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+    buildCommand: "./build.sh"
+    startCommand: gunicorn khaleon.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.7"
+      - key: DJANGO_SETTINGS_MODULE
+        value: khaleon.settings.production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: khaleon-db
+          property: connectionString
+      - key: WEB_CONCURRENCY
+        value: "2"
