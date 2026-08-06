@@ -13,7 +13,7 @@ services:
     plan: free
     region: oregon
     branch: main
-    buildCommand: "./build.sh"
+    buildCommand: bash build.sh
     startCommand: gunicorn khaleon.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: PYTHON_VERSION

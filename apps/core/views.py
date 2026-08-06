@@ -1,8 +1,13 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from apps.blog.models import Post
 from apps.core.models import SiteConfig, Stat
 from apps.services.models import Service
+
+
+def health(request):
+    return JsonResponse({"status": "ok"})
 
 
 def home(request):
