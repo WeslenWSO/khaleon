@@ -9,6 +9,7 @@ class Service(models.Model):
         ("robot", "Automação"),
         ("shield", "Compliance"),
         ("brain", "Inteligência"),
+        ("leaf", "Ambiental"),
     ]
 
     title = models.CharField("Título", max_length=150)

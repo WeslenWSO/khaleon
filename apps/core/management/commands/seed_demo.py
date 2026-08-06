@@ -131,6 +131,26 @@ class Command(BaseCommand):
                 ),
                 "order": 4,
             },
+            {
+                "title": "Consulta CAR",
+                "slug": "consulta-car",
+                "icon": "leaf",
+                "summary": "Consulta e validação do Cadastro Ambiental Rural para imóveis rurais.",
+                "description": (
+                    "O Cadastro Ambiental Rural (CAR) é obrigatório para imóveis rurais no Brasil. "
+                    "A Khaleon IA oferece consulta, validação e acompanhamento do status cadastral "
+                    "junto aos órgãos ambientais estaduais.\n\n"
+                    "Nosso serviço inclui:\n"
+                    "• Consulta de situação cadastral por CPF/CNPJ ou número do imóvel\n"
+                    "• Verificação de pendências e regularização ambiental\n"
+                    "• Relatórios consolidados para due diligence e compliance\n"
+                    "• Suporte na integração com sistemas de gestão rural\n\n"
+                    "Ideal para empresas do agronegócio, instituições financeiras, consultorias "
+                    "ambientais e produtores rurais que precisam de agilidade e confiabilidade "
+                    "nas consultas ao CAR."
+                ),
+                "order": 5,
+            },
         ]
         for data in services_data:
             Service.objects.update_or_create(slug=data["slug"], defaults={**data, "active": True})
