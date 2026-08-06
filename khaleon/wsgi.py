@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'khaleon.settings.production')
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "khaleon.settings.production")
+
+from khaleon.render_boot import run_render_boot
+
+run_render_boot()
 
 application = get_wsgi_application()

@@ -1,11 +1,14 @@
+from django.db import OperationalError, ProgrammingError
+from django.http import Http404
 from django.shortcuts import get_object_or_404, render
 
+from apps.core.db_utils import safe_query
 from apps.services.conta_azul import get_dashboard_data
 from apps.services.models import Service
 
 
 def service_list(request):
-    services = Service.objects.filter(active=True)
+    services = safe_query(lambda: list(Service.objects.filter(active=True)))
     context = {
         "services": services,
         "page_title": "Serviços — Khaleon IA",
@@ -15,7 +18,11 @@ def service_list(request):
 
 
 def service_detail(request, slug):
-    service = get_object_or_404(Service, slug=slug, active=True)
+    try:
+        service = get_object_or_404(Service, slug=slug, active=True)
+    except (OperationalError, ProgrammingError):
+        raise Http404("Serviço não encontrado") from None
+
     context = {
         "service": service,
         "page_title": f"{service.title} — Khaleon IA",
@@ -26,7 +33,11 @@ def service_detail(request, slug):
 
 
 def conta_azul_dashboard(request):
-    service = get_object_or_404(Service, slug="dashboard-conta-azul", active=True)
+    try:
+        service = get_object_or_404(Service, slug="dashboard-conta-azul", active=True)
+    except (OperationalError, ProgrammingError):
+        raise Http404("Serviço não encontrado") from None
+
     data = get_dashboard_data()
     context = {
         "service": service,
